@@ -1,0 +1,30 @@
+
+<div id="myDIV" class="header">
+    <h2 >To Do List- Angular</h2><br>
+<div  class="form">
+<input class="inp" #inp type="text" id="myInput" placeholder="Title...">
+<button class="addBtn" (click)="addToList(inp.value)">Add</button>
+</div>
+<br>
+</div>
+
+
+ <div  class="task-container"*ngFor="let task of list; index as i">
+    <div>
+     <input (click)="taskComplited(i)" class="v-box" type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+     
+  
+    </div>
+    <span [ngClass]="{'done': !task.done}">{{task.task}}</span>
+    <!-- <p [ngStyle]="{ text-decoration: x > 4 ? 'lightblue' : 'transparent' }">
+            This is a sample Text
+    </p> -->
+    
+    <div>
+     <i class="fa fa-pencil"></i>
+     <i (click)="removeFromList(i)" class="fa fa-trash"  ></i>
+     </div>
+
+    </div>
+
+
