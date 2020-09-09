@@ -11,20 +11,31 @@
 
  <div  class="task-container"*ngFor="let task of list; index as i">
     <div>
-     <input (click)="taskComplited(i)" class="v-box" type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-     
-  
+        <div class="v" (click)="taskComplited(i)" >
+            <span *ngIf="!task.done" style='font-size:20px; '>&#9989;</span>
+        </div>
+        
     </div>
+
     <span [ngClass]="{'done': !task.done}">{{task.task}}</span>
-    <!-- <p [ngStyle]="{ text-decoration: x > 4 ? 'lightblue' : 'transparent' }">
-            This is a sample Text
-    </p> -->
+   
     
     <div>
-     <i class="fa fa-pencil"></i>
+     <i class="closeBtnOrbuy"[disabled]="!flag" (click)="addItemToBag()"  class="fa fa-pencil"></i>
      <i (click)="removeFromList(i)" class="fa fa-trash"  ></i>
      </div>
 
     </div>
+    <div *ngIf="fff" class="backdrop" (click)="onClose()">
+
+    </div>
+    
+    <div *ngIf="fff" class="alert-box">
+      <p>{{ message }}</p>
+      <div class="alert-box-actions">
+        <button class="closeBtnOrbuy" (click)="onClose()">סגור</button>
+      </div>
+    </div>
+
 
 
