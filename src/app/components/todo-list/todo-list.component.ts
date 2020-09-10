@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { TasksService } from '../../service/tasks.service';
 import { TaskModel } from '../../models/task-model';
 
@@ -8,60 +8,59 @@ import { TaskModel } from '../../models/task-model';
   styleUrls: ['./todo-list.component.css']
 })
 export class TodoListComponent implements OnInit {
-
   list: TaskModel[];
-  values: string
+  values: string;
   boxChacked: boolean;
-  modal
-  message: string = 'aaaaaaaaaaaaaaaa'
-  fff = false
-  flag = true
-
-
-
+  modal;
+  closePopup = false;
+  flag = true;
+  curentTaskToBeChange: string = '';
+  cuurentIndex: number = -1;
 
   constructor(private taskSVC: TasksService) {}
 
   ngOnInit(): void {
-    this.list = this.taskSVC.list
-    this.values = this.taskSVC.values
-    this.boxChacked = this.taskSVC.boxChacked
-    this.modal = document.getElementById("myModal");
+    this.list = this.taskSVC.list;
+    this.values = this.taskSVC.values;
+    this.boxChacked = this.taskSVC.boxChacked;
+    this.modal = document.getElementById('myModal');
 
-    this.taskSVC.getConfig().subscribe((data: TaskModel[] )=> {
-    // this.list = data
-     
-    })
+    this.taskSVC.getConfig().subscribe((data: TaskModel[]) => {
+      this.taskSVC.list = data;
+      this.list = data;
+    });
   }
 
-  
-  addToList(value: string){
-    console.log(22222222222);
-    
-    this.taskSVC.addToList(value)
+  addToList(value: string) {
+    this.taskSVC.addToList(value);
   }
 
-  removeFromList(index){
-    this.taskSVC.removeFromList(index)
+  removeFromList(index) {
+    this.taskSVC.removeFromList(index);
   }
 
-  taskComplited(index){
-    console.log(1111111111);
-    
-    this.taskSVC.taskComplited(index)
+  taskComplited(index) {
+    this.taskSVC.taskComplited(index);
   }
 
-  onClose(){
-    this.fff = false
+  changeTask(index) {
+    this.cuurentIndex = index;
+    this.taskSVC.changeTask(index);
+    this.curentTaskToBeChange = this.list[index].task;
+    console.log('list:', this.list);
   }
 
-  addItemToBag(){
+  onClose(inpToChange) {
+    this.taskSVC.taskToBeChange = inpToChange
+    this.closePopup = false;
+    this.list[this.cuurentIndex].task = inpToChange;
+    this.list[this.cuurentIndex].done = true;
+  }
+
+  editTask(index) {
+    console.log('additemtobag');
     this.flag = false;
-    this.fff = true
-
+    this.closePopup = true;
+    this.changeTask(index);
   }
-
-
-
 }
-
